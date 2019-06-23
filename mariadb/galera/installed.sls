@@ -3,7 +3,6 @@ include:
 
 galera_installed:
     pkg.installed:
-        - name: mariadb-server
-        - refresh: True
+        - name: galera-4
         - require:
             - pkgrepo: mariadb_repo

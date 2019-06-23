@@ -10,6 +10,8 @@ mariadb_repo:
 
 mariadb_installed:
     pkg.installed:
-        - name: mariadb-server
+        - names:
+            - mariadb-server
+            - mariadb-client
         - refresh: True
 
