@@ -1,0 +1,2 @@
+# MariaDB master/master replication
+
