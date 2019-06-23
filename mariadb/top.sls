@@ -1,0 +1,3 @@
+base:
+  '*':
+    - mariadb_10
