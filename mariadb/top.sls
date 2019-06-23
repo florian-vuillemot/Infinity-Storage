@@ -4,3 +4,5 @@ base:
     - galera
   'arbitrator':
     - galera_arbitrator
+  'backup':
+    - backup
