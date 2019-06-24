@@ -7,3 +7,5 @@ base:
     - galera_arbitrator
   'master':
     - galera_master
+  'slave*':
+    - galera_slave
