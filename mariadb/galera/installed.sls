@@ -6,3 +6,7 @@ galera_installed:
         - name: galera-4
         - require:
             - pkgrepo: mariadb_repo
+
+rsync_installed:
+    pkg.installed:
+        - name: rsync
