@@ -5,3 +5,5 @@ base:
     - backup
   'arbitrator':
     - galera_arbitrator
+  'master':
+    - galera_master
