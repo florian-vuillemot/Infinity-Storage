@@ -38,8 +38,8 @@ The only difference for the user is in the hostname configuration for SaltStack.
 You need SaltStack ssh install on your machine: https://docs.saltstack.com/en/getstarted/ssh/system.html
 This scripts were tested on Ubuntu 18.04.
 
-Clone this repo, and create a symlink like `/srv/salt -> /home/my/Infinity-Storage/mariadb`.
-Open the file `conf/galera.cnf`, and update the line `wsrep_cluster_address="gcomm://192.168.1.72"` with your ip. You can add multiple ip(s) by adding `,` in-between, like `wsrep_cluster_address="gcomm://192.168.1.72,192.168.1.42"`.
+1. Clone this repo, and create a symlink like `/srv/salt -> /home/my/Infinity-Storage/mariadb`.
+2. Open the file `conf/galera.cnf`, and update the line `wsrep_cluster_address="gcomm://192.168.1.72"` with your ip. You can add multiple ip(s) by adding `,` in-between, like `wsrep_cluster_address="gcomm://192.168.1.72,192.168.1.42"`.
 
 Sometimes we use the term "master" to speak about the machine that creates the Galera Cluster. There aren't references of the cluster replication configuration that stay master/master.
 
