@@ -3,9 +3,14 @@
 ## What is master/master replication and when use it
 
 Master/master it's a way to obtain a cluster of database with the same content.
+
 This allows a higher disponibility of a cluster without down time in case of database failure.
+
 Moreover, this allows a good load balancing with read and write operations on each database.
+
 This configuration is not perfect and creates a lot of limitations.
+
+The MariaDB master/master cluster is create thanks to the tools Galera: https://mariadb.com/kb/en/library/what-is-mariadb-galera-cluster/
 
 Please read this articles before using a master/master replication on MariaDB in production: 
 * Uses case: https://mariadb.com/kb/en/library/galera-use-cases/
@@ -16,7 +21,7 @@ Please read this articles before using a master/master replication on MariaDB in
 
 ## Workflow
 
-We are using SaltStack for install and configure MariaDB Galera Cluster for the master/master replication.
+We are using SaltStack for installing and configuring MariaDB Galera Cluster for the master/master replication.
 
 1. Install MariaDB server on the machine
 2. Install MariaDB Galera Cluster tool
@@ -24,73 +29,79 @@ We are using SaltStack for install and configure MariaDB Galera Cluster for the 
 
 After that, there are 2 cases:
 * It's the first machine that you create
-* There are already a Galera Cluster up
+* There is already a Galera Cluster running
 
-The only difference for user is in the hostname configuration for SaltStack. In the first case, you have to specify in the hostname that is you master machine. The script automatically launch the Galera Cluster if the machine is considere as the master.
+The only difference for the user is in the hostname configuration for SaltStack. In the first case, you have to specify in the hostname that it is you master machine. The script automatically launches the Galera Cluster if the machine is considered as the master.
 
 ## Before starting
 
 You need SaltStack ssh install on your machine: https://docs.saltstack.com/en/getstarted/ssh/system.html
-This scripts were test on Ubuntu 18.04.
-Clone this repo, and create a symlink like `/srv/salt -> /home/my/Infinity-Storage/mariadb`.
-Open the file `conf/galera.cnf`, and update the line `wsrep_cluster_address="gcomm://192.168.1.72"` with your ip. You can add multiple ip by adding `,` between each like `wsrep_cluster_address="gcomm://192.168.1.72,192.168.1.42"`.
+This scripts were tested on Ubuntu 18.04.
 
-## How to create a 'master' MariaDB
+Clone this repo, and create a symlink like `/srv/salt -> /home/my/Infinity-Storage/mariadb`.
+Open the file `conf/galera.cnf`, and update the line `wsrep_cluster_address="gcomm://192.168.1.72"` with your ip. You can add multiple ip(s) by adding `,` in-between, like `wsrep_cluster_address="gcomm://192.168.1.72,192.168.1.42"`.
+
+Sometimes we use the term "master" to speak about the machine that creates the Galera Cluster. There aren't references of the cluster replication configuration that stay master/master.
+
+## How to create the Galera Cluster
 
 In your roster file (/etc/salt/roster), create a master hostname with the machine information
 
 Ex:
-`
+```
 master:
   host: 192.168.1.42    # The IP addr or DNS hostname
-  user: foo             # Remote executions will be executed as user fred
+  user: foo             # Remote executions will be executed as user foo
   passwd: bar           # The password to use for login, if omitted, keys are used
   sudo: True            # Whether to sudo to root, not enabled by default
   tty: True             # TTY for allow sudo access
-`
+```
 
-After that, you can run `salt-ssh -i master state.highstate`. This will installed, configure and launch the Galera cluster.
+After that, you can run `salt-ssh -i master state.highstate`. This will install, configure and launch the Galera cluster.
 
-Note: if you want to manage multiple cluster, you can rename the `master` hostname in `master1`, `master2`... The only important point is to start the hostname with `master`.
+Note: if you want to manage multiple clusters, you can rename the `master` hostname in `master1`, `master2`... The only important point is to start the hostname with `master`.
 
 
-## How to create a slave machine
+## How to add a machine to the Galera Cluster
 
-Add in your roster file a hostname (as for create a master) but name this hostname `slaveFooBar`.
-
+Add in your roster file a hostname (as in the "How to create the Galera Cluster" part) but name this hostname `slaveFooBar`.
 
 Ex:
-`
+```
 slaveFoo:
   host: 192.168.1.21    # The IP addr or DNS hostname
-  user: foo             # Remote executions will be executed as user fred
+  user: foo             # Remote executions will be executed as user foo
   passwd: bar           # The password to use for login, if omitted, keys are used
   sudo: True            # Whether to sudo to root, not enabled by default
   tty: True             # TTY for allow sudo access
 slaveBar:
   host: 192.168.1.84    # The IP addr or DNS hostname
-  user: foo             # Remote executions will be executed as user fred
+  user: foo             # Remote executions will be executed as user foo
   passwd: bar           # The password to use for login, if omitted, keys are used
   sudo: True            # Whether to sudo to root, not enabled by default
   tty: True             # TTY for allow sudo access
 ....
-`
+```
 
 The only important point is to start your hostname by `slave`.
-After that run `salt-ssh -i slaveFoo state.highstate`. This install, configure and add the machine in the Galera Cluster.
+
+After that, run `salt-ssh -i slaveFoo state.highstate`. This installs, configures and adds the machine in the Galera Cluster.
 
 
 ## Backup and restore
 
-Backup are automatic and on each machine. It's configure during the installation. It's done by a cronjob that you can configure in the `conf/cronjob` file.
-For restore a backup:
+Backups are automatically created and configured on each machine.
+
+It's done by a cron job that you can configure in the `conf/cronjob` file.
+
+To restore a backup:
 1. Create a new Galera Cluster (just with a 'master' machine)
 2. Copy the backup file that you want to restore and upload it on the new cluster (in the directory /var/mariadb/backup)
 3. Run `salt-ssh -i master restore`
 
-You can also remove other machine from the cluster and after that run the restore operation. But this can create some complication.
+You can also remove other machines from the cluster and after that run the restore operation. But this can create some complications.
 
-This approch is not perfect. The best way is to create a SaltStack state for choose the backup file and download it on the administrator machine. Then update the actual task for upload this backup on the new cluster and make the change.
+This approch is not perfect. The best way is to create a SaltStack state to choose the backup file from and download it on the administrator machine. Then update the actual task to upload this backup on the new cluster and make the change.
 
 ## Resources
 
