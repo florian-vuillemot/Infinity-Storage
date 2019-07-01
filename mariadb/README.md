@@ -40,6 +40,7 @@ This scripts were tested on Ubuntu 18.04.
 
 1. Clone this repo, and create a symlink like `/srv/salt -> /home/my/Infinity-Storage/mariadb`.
 2. Open the file `conf/galera.cnf`, and update the line `wsrep_cluster_address="gcomm://192.168.1.72"` with your ip. You can add multiple ip(s) by adding `,` in-between, like `wsrep_cluster_address="gcomm://192.168.1.72,192.168.1.42"`.
+3. Configure your remote connection (show **remote connections** part)
 
 Sometimes we use the term "master" to speak about the machine that creates the Galera Cluster. There aren't references of the cluster replication configuration that stay master/master.
 
@@ -62,7 +63,7 @@ After that, you can run `salt-ssh -i master state.highstate`. This will install,
 Note: if you want to manage multiple clusters, you can rename the `master` hostname in `master1`, `master2`... The only important point is to start the hostname with `master`.
 
 
-## How to add a machine to the Galera Cluster
+## How to add a machine to the Galera Cluster (on the fly)
 
 Add in your roster file a hostname (as in the "How to create the Galera Cluster" part) but name this hostname `slaveFooBar`.
 
@@ -87,6 +88,29 @@ The only important point is to start your hostname by `slave`.
 
 After that, run `salt-ssh -i slaveFoo state.highstate`. This installs, configures and adds the machine in the Galera Cluster.
 
+## Remote connections
+
+Administrator connection can only be on the local machine.
+
+For remote connection, you have to update your pillar for create a remote user. This user is limited in action (read the state file `users_and_tables/config.sls`).
+
+Business information are stock in pillar file. By default, those files are in `/srv/pillar` directory.
+
+Create a pillar to file for your mariadb configuration `/srv/pillar/top.sls`:
+
+```
+base:
+  '*':
+    - mariadb
+```
+
+Than you pillar configuration `/srv/pillar/mariadb.sls`:
+```
+users: ['username@ip']
+password: {'username@ip': 'password'}
+```
+
+Note: If you don't want to allow remote connection just let users empty (`[]`).
 
 ## Backup and restore
 
