@@ -1,9 +1,10 @@
 base:
   '*':
     - mariadb_10
+    - users_and_tables
     - galera
     - backup
-    - business_config
+    - firewall
   'master*':
     - galera_master
   'slave*':
