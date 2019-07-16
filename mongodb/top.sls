@@ -1,0 +1,4 @@
+base:
+  '*':
+    - replica
+#    - server
