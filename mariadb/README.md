@@ -121,7 +121,7 @@ It's done by a cron job that you can configure in the `conf/cronjob` file.
 To restore a backup:
 1. Create a new Galera Cluster (just with a 'master' machine)
 2. Copy the backup file that you want to restore and upload it on the new cluster (in the directory /var/mariadb/backup)
-3. Run `salt-ssh -i master restore`
+3. Run `salt-ssh -i master state.apply restore`
 
 You can also remove other machines from the cluster and after that run the restore operation. But this can create some complications.
 
