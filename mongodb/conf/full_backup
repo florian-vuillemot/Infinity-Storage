@@ -1,0 +1,5 @@
+#!/bin/sh
+
+BASE_FOLDER=/home/mongodb/backup/
+FOLDER=$BASE_FOLDER$(date -u +\%Y\%m\%dT\%H\%M\%S)
+/usr/bin/mongodump --out $FOLDER >> /var/log/full_backup.log 2>&1 

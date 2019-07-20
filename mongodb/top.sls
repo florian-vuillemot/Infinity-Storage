@@ -1,4 +1,5 @@
 base:
   '*':
-    - replica
-#    - server
+    - server
+    - backup
+#    - replica
