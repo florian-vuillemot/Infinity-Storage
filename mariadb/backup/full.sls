@@ -1,4 +1,4 @@
-/var/mariadb/backup:
+/home/mariadb/backup:
     file.directory:
         - user: root
         - makedirs: True
