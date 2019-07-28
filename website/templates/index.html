@@ -1,0 +1,19 @@
+<form action="/load_info">
+ <select name="db_name">
+  <option value="mongodb">MongoDB</option>
+  <option value="mariadb">MariaDB</option>
+  <option value="postgresql">PostgreSQL</option>
+ </select>
+ <label for="username">Username</label><input type="text" name="username" />
+ <label for="password">Password</label><input type="password" name="password" />
+ <label for="rq">Request</label><input type="text" name="rq" />
+ <input type="submit" value="valider" />
+</form>
+
+<p>
+  {% if res %}
+  {{ res }}
+  {% else %}
+  No data to display
+  {% endif %}
+</p>
