@@ -3,4 +3,5 @@ base:
     - server
     - backup
     - replica
-    - users_and_tables
+    'master*':
+      - users_and_tables
