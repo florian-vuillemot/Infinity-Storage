@@ -8,6 +8,8 @@ This allows a higher disponibility of a cluster without down time in case of dat
 
 The MongoDB master/slave cluster provide in the MongoDB stack. You don't need to install another tool.
 
+Here, we will setup a MongoDB cluster master/slave without arbiter.
+
 ![Schema of master/slave replication](https://docs.mongodb.com/manual/_images/replica-set-read-write-operations-primary.bakedsvg.svg)
 
 
