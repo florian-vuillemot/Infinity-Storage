@@ -1,5 +1,5 @@
 #!/bin/sh
 
-BASE_FOLDER=/var/mariadb/backup/
+BASE_FOLDER=/home/mariadb/backup/
 FOLDER=$BASE_FOLDER$(date -u +\%Y\%m\%dT\%H\%M\%S)
 /usr/bin/mariabackup --backup --target-dir=$FOLDER --user=root >> /var/log/full_backup.log 2>&1 

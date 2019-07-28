@@ -1,9 +1,9 @@
-/home/mariadb/backup:
+/home/mongodb/backup:
     file.directory:
         - user: root
         - makedirs: True
 
-/etc/cron.d/full_mysql_backup:
+/etc/cron.d/full_mongodb_backup:
     file.managed:
         - source:
             - 'salt://conf/cronjob'
@@ -17,4 +17,4 @@
 
 launch_full_backup_cronjob:
     cmd.run:
-        - name: crontab /etc/cron.d/full_mysql_backup
+        - name: crontab /etc/cron.d/full_mongodb_backup
