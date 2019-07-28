@@ -2,5 +2,5 @@ base:
   '*':
     - server
     - backup
-    - users_and_tables
     - replica
+    - users_and_tables
