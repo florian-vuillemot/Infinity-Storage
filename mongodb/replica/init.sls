@@ -5,7 +5,7 @@
         - group: mongodb
         - mode: 774
 
-/home/mongodb/mongodb-data
+/home/mongodb/mongodb-data:
   file.directory:
     - user: mongodb
     - group: mongodb
