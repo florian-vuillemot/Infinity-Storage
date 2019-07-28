@@ -22,7 +22,8 @@ def search_database():
             'mongodb': _mongo
             }
         res = db_fct[db_name](rq)
-    except:
+    except Exception as e:
+        print(e)
         return render_template('error.html')
     return render_template('index.html', res=res)
 
