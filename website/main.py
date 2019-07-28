@@ -21,7 +21,7 @@ def search_database():
             'mysql': _mysql,
             'mongodb': _mongo
             }
-        res = db_fct[db_name]
+        res = db_fct[db_name](rq)
     except:
         return render_template('error.html')
     return render_template('index.html', res=res)
@@ -49,7 +49,7 @@ def _mongo(rq):
     myclient = pymongo.MongoClient("mongodb://localhost:27017/")
     if "db." == rq[:3]:
         rq = rq[3:]
-    res = exec(f"myclient['heroes'].{rq}")
+    res = eval(f"myclient['heroes'].{rq}")
     if 'find' in rq.lower():
         return res
     return None
