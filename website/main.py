@@ -18,7 +18,7 @@ def search_database():
         return render_template('error.html')
     try:
         db_fct = {
-            'mysql': _mysql,
+            'mariadb': _mariadb,
             'mongodb': _mongo
             }
         res = db_fct[db_name](rq)
@@ -27,7 +27,7 @@ def search_database():
     return render_template('index.html', res=res)
 
 
-def _mysql(sql):
+def _mariadb(sql):
     import pymysql.cursors
     connection = pymysql.connect(host='',
                                  user=session['username'],
@@ -39,7 +39,7 @@ def _mysql(sql):
     with connection.cursor() as cursor:
         cursor.execute(sql)
         if "select" in sql.lower():
-            return cursor.fetchone()
+            return cursor.fetchall()
         connection.commit()
         return None
 
