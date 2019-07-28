@@ -15,3 +15,7 @@ hydrate_database:
     - name: /usr/bin/python3 /home/hydrate.py
     - require:
       - file: /home/hydrate.py
+
+restart_mongo:
+  cmd.run:
+    - name: systemctl restart mongod
