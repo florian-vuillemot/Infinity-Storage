@@ -16,5 +16,7 @@ Go in the file `postgresql.conf.slave` and update `IP_address_of_THIS_host`.
 
 Go in file `conf/backup_on_slave.sh` and update `slave_IP_address`.
 
+Go in file `conf/recovery.conf` and update the `master_IP_address` and the password.
+
 Ressources:
   - https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-on-postgresql-on-an-ubuntu-12-04-vps
