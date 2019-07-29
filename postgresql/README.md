@@ -57,5 +57,12 @@ Then run the slave recovery with: `salt-ssh -i slave state.apply slave_recovery`
 
 A backup is configure on each installation. The directory is `/home/postgres/backup`. The filename is create from the date.
 
+## Restore
+
+You can restore a complete database by running: `salt-ssh -i master-postgres state.apply restore`
+
+The better way is to create a new PostgreSQL cluster, copy the dump file to restore on the master database than restore.
+
 Ressources:
+
   - https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-on-postgresql-on-an-ubuntu-12-04-vps
