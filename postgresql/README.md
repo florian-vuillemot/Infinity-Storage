@@ -1,3 +1,6 @@
+# PostgreSQL configuration
+
+We will setup a PostgreSQL database in master/slave configuration with hot standy. This allow read only on slave.
 
 ## Configure SaltStack
 
@@ -49,6 +52,10 @@ When your configuration is ok you can install postgres on the master and the sla
 Now, you have to create the backup from the master to the slave, for do that run: `salt-ssh -i master state.apply backup_to_slave`. **Warning:** You have to configure your SSH key between host. Moreoever you have set a password for the user postgres. In case of problem, run manually the `.sh` script.
 
 Then run the slave recovery with: `salt-ssh -i slave state.apply slave_recovery`.
+
+## Backup
+
+A backup is configure on each installation. The directory is `/home/postgres/backup`. The filename is create from the date.
 
 Ressources:
   - https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-on-postgresql-on-an-ubuntu-12-04-vps
