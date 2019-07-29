@@ -1,0 +1,5 @@
+#!/bin/sh
+
+BASE_FOLDER=/home/postgres/backup/
+FOLDER=$BASE_FOLDER$(date -u +\%Y\%m\%dT\%H\%M\%S)
+su postgres -c /usr/bin/pg_dump > $FOLDER 2> /var/log/full_backup.log

@@ -10,6 +10,7 @@ include:
 run_backup:
   cmd.run:
     - name: bash /home/backup_to_slave.sh
+    - runas: postgres
     - require:
       - file: /home/backup_to_slave.sh
 
