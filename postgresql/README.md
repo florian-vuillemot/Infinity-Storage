@@ -38,7 +38,7 @@ Go in the file `postgresql.conf.slave` and update `IP_address_of_THIS_host`.
 
 ### Sync Master and Slave data
 
-Go in file `conf/backup_on_slave.sh` and update `slave_IP_address`.
+Go in file `conf/backup_to_slave.sh` and update `slave_IP_address`.
 
 Go in file `conf/recovery.conf` and update the `master_IP_address` and the password.
 
@@ -46,9 +46,9 @@ Go in file `conf/recovery.conf` and update the `master_IP_address` and the passw
 
 When your configuration is ok you can install postgres on the master and the slave by running `salt-ssh -i {your machine} state.highstate` on each machines.
 
-Now, you have to create the backup from the master to the slave, for do that run: `salt-ssh -i master state.apply backup_to_slave`.
+Now, you have to create the backup from the master to the slave, for do that run: `salt-ssh -i master state.apply backup_to_slave`. **Warning:** You have to configure your SSH key between host. Moreoever you have set a password for the user postgres. In case of problem, run manually the `.sh` script.
 
-Then run the slave recovery with: `salt-ssh -i master state.apply slave_recovery`.
+Then run the slave recovery with: `salt-ssh -i slave state.apply slave_recovery`.
 
 Ressources:
   - https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-on-postgresql-on-an-ubuntu-12-04-vps
