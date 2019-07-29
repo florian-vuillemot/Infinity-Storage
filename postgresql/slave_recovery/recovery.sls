@@ -8,4 +8,4 @@ include:
 
 restart_slave:
   cmd.run:
-    - name: systemclt start postgresql
+    - name: systemctl start postgresql
