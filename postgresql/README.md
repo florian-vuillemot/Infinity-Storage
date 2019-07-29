@@ -53,5 +53,9 @@ Now, you have to create the backup from the master to the slave, for do that run
 
 Then run the slave recovery with: `salt-ssh -i slave state.apply slave_recovery`.
 
+## Backup
+
+A backup is configure on each installation. The directory is `/home/postgres/backup`. The filename is create from the date.
+
 Ressources:
   - https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-on-postgresql-on-an-ubuntu-12-04-vps
