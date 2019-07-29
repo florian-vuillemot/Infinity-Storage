@@ -1,3 +1,6 @@
+# PostgreSQL configuration
+
+We will setup a PostgreSQL database in master/slave configuration with hot standy. This allow read only on slave.
 
 ## Configure SaltStack
 
